@@ -15,10 +15,10 @@ export const DatePicker = ({ setFormState }) => {
     const [show, setShow] = useState(false);
 
     const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate || date; // If no date is selected, maintain the current date
+        const currentDate = selectedDate || date; 
         setShow(false);
         setDate(currentDate);
-        setFormState((prevState) => ({ ...prevState, date: currentDate }));
+        setFormState((prevState) => ({ ...prevState, date: currentDate.toLocaleDateString() }));
     };
 
     const showDatepicker = () => {
@@ -27,7 +27,7 @@ export const DatePicker = ({ setFormState }) => {
 
     return (
         <SafeAreaView>
-            <Button onPress={showDatepicker} title="Select a date!" />
+            <Button onPress={showDatepicker} title="Select a Date!" />
             <Text>Selected: {date.toLocaleDateString()}</Text>
             {show && (
                 <DateTimePicker

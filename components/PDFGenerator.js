@@ -32,15 +32,21 @@ const PDFGenerator = ({ formState }) => {
               <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
             </head>
             <body style="text-align: center;">
-              <h1 style="font-size: 50px; font-family: Helvetica Neue; font-weight: normal;">
+              <h3 style="font-size: 50px; font-family: Helvetica Neue; font-weight: normal;">
                 Vessel
-              </h1>
+              </h3>
               <p>Vessel Name: ${formState.vesselName}</p>
               <p>Owner: ${formState.owner}</p>
+              <p>Type: ${formState.type}</p>
               <p>Flag: ${formState.flag}</p>
               <p>IMO: ${formState.IMO}</p>
-              <p>Year: ${formState.year}</p>
+              <p>Build in Year: ${formState.year}</p>
               <img src="data:image/jpeg;base64,${base64Image}" style="width: 200px; height: 200px;" />
+              <h3 style="font-size: 50px; font-family: Helvetica Neue; font-weight: normal;">
+                Visit
+              </h3>
+              <p> Date: ${formState.date}</p>
+
             </body>
           </html>
         `;
