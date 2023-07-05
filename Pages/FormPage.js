@@ -11,6 +11,7 @@ import {
 import CameraComponent from "../components/Camera";
 import PDFGenerator from "../components/PDFGenerator";
 import ImagePickerComponent from "../components/imagePicker";
+import { YearPicker } from "../components/YearPicker";
 
 
 
@@ -82,9 +83,13 @@ const FormPage = () => {
                         onChangeText={(value) => handleChangeText("IMO", value)}
                         style={styles.textInput}
                     />
+                    <Text style={styles.label}>Year:</Text>
+                    <YearPicker setFormState={setFormState} />
 
                     <Text style={styles.label}>Photo:</Text>
                     <ImagePickerComponent onImagePick={handleImagePick} setFormState={setFormState}/>
+
+                    
                 </View>
             )}
             {!startCamera && (
