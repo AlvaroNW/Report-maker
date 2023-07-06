@@ -41,7 +41,9 @@ const FormPage = () => {
             nationalities: [],
         },
         total: "",
-        nationalityGalleyCrew: "",
+        nationalityGalleyCrew: {
+            nationalities: [],
+        },
         totalGalleyCrew: "",
         //Responsibilities
         orderResponsibility: "",
@@ -288,6 +290,103 @@ const FormPage = () => {
             };
         });
     };
+    const handleNationalityGalleyCrewChange = (text, index) => {
+        setFormState((prevState) => {
+            const updatedNationalities = [
+                ...prevState.nationalityGalleyCrew.nationalities,
+            ];
+            updatedNationalities[index].nationality = text;
+            return {
+                ...prevState,
+                nationalityGalleyCrew: {
+                    ...prevState.nationalityGalleyCrew,
+                    nationalities: updatedNationalities,
+                },
+            };
+        });
+    };
+
+    const handleNumberOfPeopleGalleyCrewChange = (text, index) => {
+        setFormState((prevState) => {
+            const updatedNationalities = [
+                ...prevState.nationalityGalleyCrew.nationalities,
+            ];
+            updatedNationalities[index].numberOfPeople = text;
+            return {
+                ...prevState,
+                nationalityGalleyCrew: {
+                    ...prevState.nationalityGalleyCrew,
+                    nationalities: updatedNationalities,
+                },
+            };
+        });
+    };
+
+    const handleDecreaseNumberOfPeopleGalleyCrew = (index) => {
+        setFormState((prevState) => {
+            const updatedNationalities = [
+                ...prevState.nationalityGalleyCrew.nationalities,
+            ];
+            if (updatedNationalities[index].numberOfPeople > 0) {
+                updatedNationalities[index].numberOfPeople--;
+            }
+            return {
+                ...prevState,
+                nationalityGalleyCrew: {
+                    ...prevState.nationalityGalleyCrew,
+                    nationalities: updatedNationalities,
+                },
+            };
+        });
+    };
+
+    const handleIncreaseNumberOfPeopleGalleyCrew = (index) => {
+        setFormState((prevState) => {
+            const updatedNationalities = [
+                ...prevState.nationalityGalleyCrew.nationalities,
+            ];
+            updatedNationalities[index].numberOfPeople++;
+            return {
+                ...prevState,
+                nationalityGalleyCrew: {
+                    ...prevState.nationalityGalleyCrew,
+                    nationalities: updatedNationalities,
+                },
+            };
+        });
+    };
+
+    const handleAddNationalityGalleyCrew = () => {
+        setFormState((prevState) => {
+            const updatedNationalities = [
+                ...prevState.nationalityGalleyCrew.nationalities,
+                { nationality: "", numberOfPeople: "" },
+            ];
+            return {
+                ...prevState,
+                nationalityGalleyCrew: {
+                    ...prevState.nationalityGalleyCrew,
+                    nationalities: updatedNationalities,
+                },
+            };
+        });
+    };
+
+    const handleRemoveNationalityGalleyCrew = (index) => {
+        setFormState((prevState) => {
+            const updatedNationalities = [
+                ...prevState.nationalityGalleyCrew.nationalities,
+            ];
+            updatedNationalities.splice(index, 1);
+            return {
+                ...prevState,
+                nationalityGalleyCrew: {
+                    ...prevState.nationalityGalleyCrew,
+                    nationalities: updatedNationalities,
+                },
+            };
+        });
+    };
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
@@ -410,6 +509,39 @@ const FormPage = () => {
                         />
 
                         <Text style={styles.label}>Total:</Text>
+                        <TextInput style={styles.textInput} />
+                        <Text style={styles.label}>
+                            {" "}
+                            Nationality (Galley Crew) number:
+                        </Text>
+                        {formState.nationalityGalleyCrew.nationalities.map(
+                            (nationality, index) => (
+                                <NationalityInput
+                                    key={index}
+                                    nationality={nationality.nationality}
+                                    numberOfPeople={nationality.numberOfPeople}
+                                    onNationalityChange={(text) =>
+                                        handleNationalityGalleyCrewChange(text, index)
+                                    }
+                                    onNumberOfPeopleChange={(text) =>
+                                        handleNumberOfPeopleGalleyCrewChange(text, index)
+                                    }
+                                    onDecreaseNumberOfPeople={() =>
+                                        handleDecreaseNumberOfPeopleGalleyCrew(index)
+                                    }
+                                    onIncreaseNumberOfPeople={() =>
+                                        handleIncreaseNumberOfPeopleGalleyCrew(index)
+                                    }
+                                    onRemoveNationality={() =>
+                                        handleRemoveNationalityGalleyCrew(index)
+                                    }
+                                />
+                            )
+                        )}
+                        <Button
+                            title="Add Nationality"
+                            onPress={handleAddNationalityGalleyCrew}
+                        />
                     </View>
                 </React.Fragment>
             )}
