@@ -15,6 +15,7 @@ import ImagePickerComponent from "../components/imagePicker";
 import { YearPicker } from "../components/YearPicker";
 import { DatePicker } from "../components/DatePicker";
 import { Ionicons } from "@expo/vector-icons";
+import NationalityInput from "../components/NationalityInput";
 
 const FormPage = () => {
     const [formState, setFormState] = useState({
@@ -380,68 +381,26 @@ const FormPage = () => {
                         </Text>
                         {formState.nationalityCrew.nationalities.map(
                             (nationality, index) => (
-                                <View key={index}>
-                                    <TextInput
-                                        style={styles.textInput}
-                                        value={nationality.nationality}
-                                        placeholder="Enter nationality"
-                                        onChangeText={(text) =>
-                                            handleNationalityChange(text, index)
-                                        }
-                                    />
-                                    <View style={styles.numberInputContainer}>
-                                        <TouchableOpacity
-                                            onPress={() =>
-                                                handleDecreaseNumberOfPeople(
-                                                    index
-                                                )
-                                            }
-                                            style={styles.numberButton}
-                                        >
-                                            <Ionicons
-                                                name="remove-outline"
-                                                size={24}
-                                                color="black"
-                                            />
-                                        </TouchableOpacity>
-                                        <TextInput
-                                            style={styles.numberInput}
-                                            value={nationality.numberOfPeople}
-                                            placeholder="Number of people"
-                                            onChangeText={(text) =>
-                                                handleNumberOfPeopleChange(
-                                                    text,
-                                                    index
-                                                )
-                                            }
-                                            keyboardType="numeric"
-                                        />
-                                        <TouchableOpacity
-                                            onPress={() =>
-                                                handleIncreaseNumberOfPeople(
-                                                    index
-                                                )
-                                            }
-                                            style={styles.numberButton}
-                                        >
-                                        <TouchableOpacity
-  onPress={() => handleDecreaseNumberOfPeople(index)}
-  style={styles.numberButton}
-></TouchableOpacity>
-                                            <Ionicons
-                                                name="add-outline"
-                                                size={24}
-                                                color="black"
-                                            />
-                                        </TouchableOpacity>
-                                    </View>
-                                    <Button
-                                        title="Remove"
-                                        onPress={() =>
-                                            handleRemoveNationality(index)
-                                        }
-                                    />
-                                </View>
+                                <NationalityInput
+                                    key={index}
+                                    nationality={nationality.nationality}
+                                    numberOfPeople={nationality.numberOfPeople}
+                                    onNationalityChange={(text) =>
+                                        handleNationalityChange(text, index)
+                                    }
+                                    onNumberOfPeopleChange={(text) =>
+                                        handleNumberOfPeopleChange(text, index)
+                                    }
+                                    onDecreaseNumberOfPeople={() =>
+                                        handleDecreaseNumberOfPeople(index)
+                                    }
+                                    onIncreaseNumberOfPeople={() =>
+                                        handleIncreaseNumberOfPeople(index)
+                                    }
+                                    onRemoveNationality={() =>
+                                        handleRemoveNationality(index)
+                                    }
+                                />
                             )
                         )}
 
