@@ -456,6 +456,7 @@ const FormPage = () => {
                         <TextInput style={styles.textInput} />
                         <Text style={styles.label}>HMS Representative:</Text>
                     </View>
+                    {/* Crew */}
                     <View style={styles.formContainer}>
                         <Text style={styles.sectionLabel}>Crew</Text>
                         <Text style={styles.label}>Captain Name:</Text>
@@ -543,6 +544,17 @@ const FormPage = () => {
                             onPress={handleAddNationalityGalleyCrew}
                         />
                     </View>
+                    {/* Responsibilities */}
+                    <View style={styles.formContainer}>Responsibilities
+                        <Text style={styles.sectionLabel}>Responsibilities</Text>
+                        <Text style={styles.label}>Order Responsibility:</Text>
+                        <TextInput style={styles.textInput} />
+                        <Text style={styles.label}> Ration Report Responsibility:</Text>
+                        <TextInput style={styles.textInput} />
+                        <Text style={styles.label}>Inventory Responsibility:</Text>
+                        <TextInput style={styles.textInput} />
+                    </View>
+
                 </React.Fragment>
             )}
             {!startCamera && (
