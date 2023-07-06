@@ -7,12 +7,14 @@ import {
     Text,
     Image,
     ScrollView,
+    TouchableOpacity,
 } from "react-native";
 import CameraComponent from "../components/Camera";
 import PDFGenerator from "../components/PDFGenerator";
 import ImagePickerComponent from "../components/imagePicker";
 import { YearPicker } from "../components/YearPicker";
 import { DatePicker } from "../components/DatePicker";
+import { Ionicons } from "@expo/vector-icons";
 
 const FormPage = () => {
     const [formState, setFormState] = useState({
@@ -34,7 +36,9 @@ const FormPage = () => {
         firstChiefCookEmbarcation: "",
         secondChiefCookName: "",
         secondChiefCookEmbarcation: "",
-        nationalityCrew: "",
+        nationalityCrew: {
+            nationalities: [],
+        },
         total: "",
         nationalityGalleyCrew: "",
         totalGalleyCrew: "",
@@ -186,13 +190,109 @@ const FormPage = () => {
             image: imageUri,
         }));
     };
+    const handleNationalityChange = (text, index) => {
+        setFormState((prevState) => {
+            const updatedNationalities = [
+                ...prevState.nationalityCrew.nationalities,
+            ];
+            updatedNationalities[index].nationality = text;
+            return {
+                ...prevState,
+                nationalityCrew: {
+                    ...prevState.nationalityCrew,
+                    nationalities: updatedNationalities,
+                },
+            };
+        });
+    };
+
+    const handleNumberOfPeopleChange = (text, index) => {
+        setFormState((prevState) => {
+            const updatedNationalities = [
+                ...prevState.nationalityCrew.nationalities,
+            ];
+            updatedNationalities[index].numberOfPeople = text;
+            return {
+                ...prevState,
+                nationalityCrew: {
+                    ...prevState.nationalityCrew,
+                    nationalities: updatedNationalities,
+                },
+            };
+        });
+    };
+
+    const handleDecreaseNumberOfPeople = (index) => {
+        setFormState((prevState) => {
+            const updatedNationalities = [
+                ...prevState.nationalityCrew.nationalities,
+            ];
+            if (updatedNationalities[index].numberOfPeople > 0) {
+                updatedNationalities[index].numberOfPeople--;
+            }
+            return {
+                ...prevState,
+                nationalityCrew: {
+                    ...prevState.nationalityCrew,
+                    nationalities: updatedNationalities,
+                },
+            };
+        });
+    };
+
+    const handleIncreaseNumberOfPeople = (index) => {
+        setFormState((prevState) => {
+            const updatedNationalities = [
+                ...prevState.nationalityCrew.nationalities,
+            ];
+            updatedNationalities[index].numberOfPeople++;
+            return {
+                ...prevState,
+                nationalityCrew: {
+                    ...prevState.nationalityCrew,
+                    nationalities: updatedNationalities,
+                },
+            };
+        });
+    };
+
+    const handleAddNationality = () => {
+        setFormState((prevState) => {
+            const updatedNationalities = [
+                ...prevState.nationalityCrew.nationalities,
+                { nationality: "", numberOfPeople: "" },
+            ];
+            return {
+                ...prevState,
+                nationalityCrew: {
+                    ...prevState.nationalityCrew,
+                    nationalities: updatedNationalities,
+                },
+            };
+        });
+    };
+
+    const handleRemoveNationality = (index) => {
+        setFormState((prevState) => {
+            const updatedNationalities = [
+                ...prevState.nationalityCrew.nationalities,
+            ];
+            updatedNationalities.splice(index, 1);
+            return {
+                ...prevState,
+                nationalityCrew: {
+                    ...prevState.nationalityCrew,
+                    nationalities: updatedNationalities,
+                },
+            };
+        });
+    };
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
             {!startCamera && (
                 <React.Fragment>
-                    
-                {/* Vessel*/}
+                    {/* Vessel*/}
                     <View style={styles.formContainer}>
                         <Text style={styles.sectionLabel}>Vessel</Text>
                         <Text style={styles.label}>Name:</Text>
@@ -232,7 +332,9 @@ const FormPage = () => {
                         <Text style={styles.label}>IMO:</Text>
                         <TextInput
                             value={formState.IMO}
-                            onChangeText={(value) => handleChangeText("IMO", value)}
+                            onChangeText={(value) =>
+                                handleChangeText("IMO", value)
+                            }
                             style={styles.textInput}
                         />
                         <Text style={styles.label}>Year:</Text>
@@ -244,13 +346,111 @@ const FormPage = () => {
                             setFormState={setFormState}
                         />
                     </View>
-                
-                
-                {/* Visit */}
+
+                    {/* Visit */}
                     <View style={styles.formContainer}>
                         <Text style={styles.sectionLabel}>Visit</Text>
                         <Text style={styles.label}>Date:</Text>
                         <DatePicker setFormState={setFormState} />
+                        <Text style={styles.label}>Port:</Text>
+                        <TextInput style={styles.textInput} />
+                        <Text style={styles.label}>HMS Representative:</Text>
+                    </View>
+                    <View style={styles.formContainer}>
+                        <Text style={styles.sectionLabel}>Crew</Text>
+                        <Text style={styles.label}>Captain Name:</Text>
+                        <TextInput style={styles.textInput} />
+                        <Text style={styles.label}>First Chief Cook Name:</Text>
+                        <TextInput style={styles.textInput} />
+                        <Text style={styles.label}>
+                            {" "}
+                            First Chief Cook Embarcation:
+                        </Text>
+                        <TextInput style={styles.textInput} />
+                        <Text style={styles.label}>
+                            Second Chief Cook Name:
+                        </Text>
+                        <TextInput style={styles.textInput} />
+                        <Text style={styles.label}>
+                            Second Chief Cook Embarcation:
+                        </Text>
+                        <TextInput style={styles.textInput} />
+                        <Text style={styles.label}>
+                            Nationality (Full Crew) Number
+                        </Text>
+                        {formState.nationalityCrew.nationalities.map(
+                            (nationality, index) => (
+                                <View key={index}>
+                                    <TextInput
+                                        style={styles.textInput}
+                                        value={nationality.nationality}
+                                        placeholder="Enter nationality"
+                                        onChangeText={(text) =>
+                                            handleNationalityChange(text, index)
+                                        }
+                                    />
+                                    <View style={styles.numberInputContainer}>
+                                        <TouchableOpacity
+                                            onPress={() =>
+                                                handleDecreaseNumberOfPeople(
+                                                    index
+                                                )
+                                            }
+                                            style={styles.numberButton}
+                                        >
+                                            <Ionicons
+                                                name="remove-outline"
+                                                size={24}
+                                                color="black"
+                                            />
+                                        </TouchableOpacity>
+                                        <TextInput
+                                            style={styles.numberInput}
+                                            value={nationality.numberOfPeople}
+                                            placeholder="Number of people"
+                                            onChangeText={(text) =>
+                                                handleNumberOfPeopleChange(
+                                                    text,
+                                                    index
+                                                )
+                                            }
+                                            keyboardType="numeric"
+                                        />
+                                        <TouchableOpacity
+                                            onPress={() =>
+                                                handleIncreaseNumberOfPeople(
+                                                    index
+                                                )
+                                            }
+                                            style={styles.numberButton}
+                                        >
+                                        <TouchableOpacity
+  onPress={() => handleDecreaseNumberOfPeople(index)}
+  style={styles.numberButton}
+></TouchableOpacity>
+                                            <Ionicons
+                                                name="add-outline"
+                                                size={24}
+                                                color="black"
+                                            />
+                                        </TouchableOpacity>
+                                    </View>
+                                    <Button
+                                        title="Remove"
+                                        onPress={() =>
+                                            handleRemoveNationality(index)
+                                        }
+                                    />
+                                </View>
+                            )
+                        )}
+
+                        <Button
+                            title="Add Nationality"
+                            onPress={handleAddNationality}
+                        />
+
+                        <Text style={styles.label}>Total:</Text>
                     </View>
                 </React.Fragment>
             )}
