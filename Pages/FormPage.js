@@ -52,49 +52,54 @@ const FormPage = () => {
         inventoryResponsibility: "",
         //Provision Areas
         galley: {
-            likert: "",
+            likert: "Poor",
             comments: "",
         },
         officerPantry: {
-            likert: "",
+            likert: "Poor",
             comments: "",
         },
         officerMessroom: {
-            likert: "",
+            likert: "Poor",
             comments: "",
         },
         crewPantry: {
-            likert: "",
+            likert: "Poor",
+            comments: "",
+        },
+        crewMessroom: {
+            likert: "Poor",
             comments: "",
         },
         chillerFruitsAndVegetables: {
-            likert: "",
+            likert: "Poor",
             comments: "",
         },
         chillerDairy: {
-            likert: "",
+            likert: "Poor",
             comments: "",
         },
         freezerMeat: {
-            likert: "",
+            likert: "Poor",
             comments: "",
         },
         freezerFish: {
-            likert: "",
+            likert: "Poor",
             comments: "",
         },
         dryStore: {
-            likert: "",
+            likert: "Poor",
             comments: "",
         },
         dutyMeshroom: {
-            likert: "",
+            likert: "Poor",
             comments: "",
         },
         overall: {
-            likert: "",
+            likert: "Poor",
             comments: "",
         },
+
         //images
         reportImages: [],
 
@@ -209,17 +214,26 @@ const FormPage = () => {
 
     console.log(formState);
 
-
     // Handlers
     const startCameraHandler = () => {
         setStartCamera(true);
     };
 
-    const handleChangeText = (inputName, value) => {
-        setFormState((prevState) => ({
-            ...prevState,
-            [inputName]: value,
-        }));
+    const handleChangeText = (inputName, value, nestedObject = "") => {
+        if (nestedObject) {
+            setFormState((prevState) => ({
+                ...prevState,
+                [nestedObject]: {
+                    ...prevState[nestedObject],
+                    [inputName]: value,
+                },
+            }));
+        } else {
+            setFormState((prevState) => ({
+                ...prevState,
+                [inputName]: value,
+            }));
+        }
     };
 
     const handleImagePick = (imageUri) => {
@@ -425,8 +439,10 @@ const FormPage = () => {
     };
 
     const handleLikertChange = (fieldName, value) => {
-        const selectedRating = likertRatings.find((rating) => rating.value === value);
-        const label = selectedRating ? selectedRating.label : '';
+        const selectedRating = likertRatings.find(
+            (rating) => rating.value === value
+        );
+        const label = selectedRating ? selectedRating.label : "";
         setFormState((prevState) => ({
             ...prevState,
             [fieldName]: {
@@ -623,7 +639,218 @@ const FormPage = () => {
                     <View style={styles.formContainer}>
                         <Text style={styles.sectionLabel}>Provision Areas</Text>
                         <Text style={styles.label}>Galley:</Text>
-                        <Likert  onLikertChange={(value) => handleLikertChange('galley', value)}/>
+
+                        <Likert
+                            likertValue={formState.galley.likert}
+                            onLikertChange={(value) =>
+                                handleLikertChange("galley", value)
+                            }
+                        />
+                        <TextInput
+                            style={styles.textInputSlider}
+                            value={formState.galley.comments}
+                            onChangeText={(value) =>
+                                handleChangeText("comments", value, "galley")
+                            }
+                        />
+
+                        <Text style={styles.label}>Officer Pantry:</Text>
+                        <Likert
+                            onLikertChange={(value) =>
+                                handleLikertChange("officerPantry", value)
+                            }
+                        />
+                        <TextInput
+                            style={styles.textInputSlider}
+                            value={formState.officerPantry.comments}
+                            onChangeText={(value) =>
+                                handleChangeText(
+                                    "comments",
+                                    value,
+                                    "officerPantry"
+                                )
+                            }
+                        />
+                        <Text style={styles.label}>Officer Messroom:</Text>
+                        <Likert
+                            onLikertChange={(value) =>
+                                handleLikertChange("officerMessroom", value)
+                            }
+                        />
+                        <TextInput
+                            style={styles.textInputSlider}
+                            value={formState.officerMessroom.comments}
+                            onChangeText={(value) =>
+                                handleChangeText(
+                                    "comments",
+                                    value,
+                                    "officerMessroom"
+                                )
+                            }
+                        />
+
+                        <Text style={styles.label}>Crew Pantry:</Text>
+                        <Likert
+                            onLikertChange={(value) =>
+                                handleLikertChange("crewPantry", value)
+                            }
+                        />
+                        <TextInput
+                            style={styles.textInputSlider}
+                            value={formState.crewPantry.comments}
+                            onChangeText={(value) =>
+                                handleChangeText(
+                                    "comments",
+                                    value,
+                                    "crewPantry"
+                                )
+                            }
+                        />
+
+                        <Text style={styles.label}>Crew Messroom:</Text>
+                        <Likert
+                            onLikertChange={(value) =>
+                                handleLikertChange("crewMessroom", value)
+                            }
+                        />
+                        <TextInput
+                            style={styles.textInputSlider}
+                            value={formState.crewMessroom.comments}
+                            onChangeText={(value) =>
+                                handleChangeText(
+                                    "comments",
+                                    value,
+                                    "crewMessroom"
+                                )
+                            }
+                        />
+
+                        <Text style={styles.label}>
+                            Chiller Fruits and Vegetables:
+                        </Text>
+                        <Likert
+                            onLikertChange={(value) =>
+                                handleLikertChange(
+                                    "chillerFruitsAndVegetables",
+                                    value
+                                )
+                            }
+                        />
+                        <TextInput
+                            style={styles.textInputSlider}
+                            value={
+                                formState.chillerFruitsAndVegetables.comments
+                            }
+                            onChangeText={(value) =>
+                                handleChangeText(
+                                    "comments",
+                                    value,
+                                    "chillerFruitsAndVegetables"
+                                )
+                            }
+                        />
+
+                        <Text style={styles.label}>Chiller Dairy:</Text>
+                        <Likert
+                            onLikertChange={(value) =>
+                                handleLikertChange("chillerDairy", value)
+                            }
+                        />
+                        <TextInput
+                            style={styles.textInputSlider}
+                            value={
+                                formState.chillerDairy.comments
+                            }
+                            onChangeText={(value) =>
+                                handleChangeText(
+                                    "comments",
+                                    value,
+                                    "chillerDairy"
+                                )
+                            }
+                        />
+
+                        <Text style={styles.label}>Freezer Meat:</Text>
+                        <Likert
+                            onLikertChange={(value) =>
+                                handleLikertChange("freezerMeat", value)
+                            }
+                        />
+                        <TextInput
+                            style={styles.textInputSlider}
+                            value={formState.freezerMeat.comments}
+                            onChangeText={(value) =>
+                                handleChangeText(
+                                    "comments",
+                                    value,
+                                    "freezerMeat"
+                                )
+                            }
+                        />
+
+                        <Text style={styles.label}>Freezer Fish:</Text>
+                        <Likert
+                            onLikertChange={(value) =>
+                                handleLikertChange("freezerFish", value)
+                            }
+                        />
+                        <TextInput
+                            style={styles.textInputSlider}
+                            value={formState.freezerFish.comments}
+                            onChangeText={(value) =>
+                                handleChangeText(
+                                    "comments",
+                                    value,
+                                    "freezerFish"
+                                )
+                            }
+                        />
+
+                        <Text style={styles.label}>Dry Store:</Text>
+                        <Likert
+                            onLikertChange={(value) =>
+                                handleLikertChange("dryStore", value)
+                            }
+                        />
+                        <TextInput
+                            style={styles.textInputSlider}
+                            value={formState.dryStore.comments}
+                            onChangeText={(value) =>
+                                handleChangeText("comments", value, "dryStore")
+                            }
+                        />
+
+                        <Text style={styles.label}>Duty Messroom:</Text>
+                        <Likert
+                            onLikertChange={(value) =>
+                                handleLikertChange("dutyMeshroom", value)
+                            }
+                        />
+                        <TextInput
+                            style={styles.textInputSlider}
+                            value={formState.dutyMeshroom.comments}
+                            onChangeText={(value) =>
+                                handleChangeText(
+                                    "comments",
+                                    value,
+                                    "dutyMeshroom"
+                                )
+                            }
+                        />
+
+                        <Text style={styles.label}>Overall:</Text>
+                        <Likert
+                            onLikertChange={(value) =>
+                                handleLikertChange("overall", value)
+                            }
+                        />
+                        <TextInput
+                            style={styles.textInputSlider}
+                            value={formState.overall.comments}
+                            onChangeText={(value) =>
+                                handleChangeText("comments", value, "overall")
+                            }
+                        />
                     </View>
                 </React.Fragment>
             )}
@@ -650,6 +877,14 @@ const styles = StyleSheet.create({
         borderColor: "gray",
         borderWidth: 1,
         marginBottom: 20,
+        paddingHorizontal: 10,
+    },
+    textInputSlider: {
+        height: 40,
+        borderColor: "gray",
+        borderWidth: 1,
+        marginBottom: 20,
+        marginTop: 25,
         paddingHorizontal: 10,
     },
     sectionLabel: {
