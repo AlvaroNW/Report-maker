@@ -16,6 +16,7 @@ import { YearPicker } from "../components/YearPicker";
 import { DatePicker } from "../components/DatePicker";
 import NationalityInput from "../components/NationalityInput";
 import Likert from "../components/Likert";
+import { likertRatings } from "../Utils/LikertRatings";
 
 const FormPage = () => {
     const [formState, setFormState] = useState({
@@ -50,17 +51,50 @@ const FormPage = () => {
         rationReportResponsibility: "",
         inventoryResponsibility: "",
         //Provision Areas
-        galley: "",
-        officerPantry: "",
-        officerMessroom: "",
-        crewPantry: "",
-        chillerFruitsAndVegetables: "",
-        chillerDairy: "",
-        freezerMeat: "",
-        freezerFish: "",
-        dryStore: "",
-        dutyMeshroom: "",
-        overall: "",
+        galley: {
+            likert: "",
+            comments: "",
+        },
+        officerPantry: {
+            likert: "",
+            comments: "",
+        },
+        officerMessroom: {
+            likert: "",
+            comments: "",
+        },
+        crewPantry: {
+            likert: "",
+            comments: "",
+        },
+        chillerFruitsAndVegetables: {
+            likert: "",
+            comments: "",
+        },
+        chillerDairy: {
+            likert: "",
+            comments: "",
+        },
+        freezerMeat: {
+            likert: "",
+            comments: "",
+        },
+        freezerFish: {
+            likert: "",
+            comments: "",
+        },
+        dryStore: {
+            likert: "",
+            comments: "",
+        },
+        dutyMeshroom: {
+            likert: "",
+            comments: "",
+        },
+        overall: {
+            likert: "",
+            comments: "",
+        },
         //images
         reportImages: [],
 
@@ -175,6 +209,8 @@ const FormPage = () => {
 
     console.log(formState);
 
+
+    // Handlers
     const startCameraHandler = () => {
         setStartCamera(true);
     };
@@ -388,6 +424,18 @@ const FormPage = () => {
         });
     };
 
+    const handleLikertChange = (fieldName, value) => {
+        const selectedRating = likertRatings.find((rating) => rating.value === value);
+        const label = selectedRating ? selectedRating.label : '';
+        setFormState((prevState) => ({
+            ...prevState,
+            [fieldName]: {
+                ...prevState[fieldName],
+                likert: label,
+            },
+        }));
+    };
+
     return (
         <ScrollView contentContainerStyle={styles.container}>
             {!startCamera && (
@@ -575,7 +623,7 @@ const FormPage = () => {
                     <View style={styles.formContainer}>
                         <Text style={styles.sectionLabel}>Provision Areas</Text>
                         <Text style={styles.label}>Galley:</Text>
-                        <Likert />
+                        <Likert  onLikertChange={(value) => handleLikertChange('galley', value)}/>
                     </View>
                 </React.Fragment>
             )}

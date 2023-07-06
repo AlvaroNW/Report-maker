@@ -2,19 +2,12 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, TextInput } from "react-native";
 import Slider from "@react-native-community/slider";
 import { useState } from "react";
+import { likertRatings } from "../Utils/LikertRatings";
 
 
-export default function Likert() {
+export default function Likert({likertValue, onLikertChange  }) {
     const [sliderValue, setSliderValue] = useState(1);
     
-
-    const likertRatings = [
-        { value: 1, label: "Poor" },
-        { value: 2, label: "Average" },
-        { value: 3, label: "Good" },
-        { value: 4, label: "Very Good" },
-        { value: 5, label: "Excelent" },
-    ]
     const selectedRating = likertRatings.find((rating) => rating.value === sliderValue);
 
     return (
@@ -27,7 +20,11 @@ export default function Likert() {
                 minimumTrackTintColor="green"
                 maximumTrackTintColor="red"
                 step={1}
-                onValueChange={(value) => setSliderValue(parseFloat(value))}
+                onValueChange={(value) => {
+                    setSliderValue(parseFloat(value))
+                    onLikertChange(parseFloat(value))
+                
+                }}
             
             />
 
