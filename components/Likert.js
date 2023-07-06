@@ -6,7 +6,7 @@ import { useState } from "react";
 
 export default function Likert() {
     const [sliderValue, setSliderValue] = useState(1);
-    console.log(sliderValue);
+    
 
     const likertRatings = [
         { value: 1, label: "Poor" },
