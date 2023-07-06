@@ -14,8 +14,8 @@ import PDFGenerator from "../components/PDFGenerator";
 import ImagePickerComponent from "../components/imagePicker";
 import { YearPicker } from "../components/YearPicker";
 import { DatePicker } from "../components/DatePicker";
-import { Ionicons } from "@expo/vector-icons";
 import NationalityInput from "../components/NationalityInput";
+import Likert from "../components/Likert";
 
 const FormPage = () => {
     const [formState, setFormState] = useState({
@@ -522,16 +522,26 @@ const FormPage = () => {
                                     nationality={nationality.nationality}
                                     numberOfPeople={nationality.numberOfPeople}
                                     onNationalityChange={(text) =>
-                                        handleNationalityGalleyCrewChange(text, index)
+                                        handleNationalityGalleyCrewChange(
+                                            text,
+                                            index
+                                        )
                                     }
                                     onNumberOfPeopleChange={(text) =>
-                                        handleNumberOfPeopleGalleyCrewChange(text, index)
+                                        handleNumberOfPeopleGalleyCrewChange(
+                                            text,
+                                            index
+                                        )
                                     }
                                     onDecreaseNumberOfPeople={() =>
-                                        handleDecreaseNumberOfPeopleGalleyCrew(index)
+                                        handleDecreaseNumberOfPeopleGalleyCrew(
+                                            index
+                                        )
                                     }
                                     onIncreaseNumberOfPeople={() =>
-                                        handleIncreaseNumberOfPeopleGalleyCrew(index)
+                                        handleIncreaseNumberOfPeopleGalleyCrew(
+                                            index
+                                        )
                                     }
                                     onRemoveNationality={() =>
                                         handleRemoveNationalityGalleyCrew(index)
@@ -545,16 +555,28 @@ const FormPage = () => {
                         />
                     </View>
                     {/* Responsibilities */}
-                    <View style={styles.formContainer}>Responsibilities
-                        <Text style={styles.sectionLabel}>Responsibilities</Text>
+                    <View style={styles.formContainer}>
+                        <Text style={styles.sectionLabel}>
+                            Responsibilities
+                        </Text>
                         <Text style={styles.label}>Order Responsibility:</Text>
                         <TextInput style={styles.textInput} />
-                        <Text style={styles.label}> Ration Report Responsibility:</Text>
+                        <Text style={styles.label}>
+                            {" "}
+                            Ration Report Responsibility:
+                        </Text>
                         <TextInput style={styles.textInput} />
-                        <Text style={styles.label}>Inventory Responsibility:</Text>
+                        <Text style={styles.label}>
+                            Inventory Responsibility:
+                        </Text>
                         <TextInput style={styles.textInput} />
                     </View>
-
+                    {/* Provision Areas */}
+                    <View style={styles.formContainer}>
+                        <Text style={styles.sectionLabel}>Provision Areas</Text>
+                        <Text style={styles.label}>Galley:</Text>
+                        <Likert />
+                    </View>
                 </React.Fragment>
             )}
             {!startCamera && (
